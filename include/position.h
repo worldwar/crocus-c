@@ -53,7 +53,7 @@ public:
     }
 
     bool in_line(const Position& position) const {
-        return _x == position._x && _y == position._y;
+        return _x == position._x || _y == position._y;
     }
 };
 

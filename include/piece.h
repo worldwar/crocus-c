@@ -2,8 +2,7 @@
 #define CROCUS_PIECE_H
 
 #include "enums.h"
-
-class Position;
+#include "position.h"
 
 class Piece {
 private:

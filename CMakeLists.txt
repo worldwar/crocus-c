@@ -12,7 +12,7 @@ set(CMAKE_CXX_STANDARD 14)
 #SET(GCC_COVERAGE_LINK_FLAGS    "-lgcov")
 
 FILE( GLOB_RECURSE PROJECT_SOURCES src/rule/*.cpp src/*.cpp)
-FILE( GLOB_RECURSE PROJECT_TEST_SOURCES test/**/*.c test/**/*.cpp)
+FILE( GLOB_RECURSE PROJECT_TEST_SOURCES test/*.cpp)
 FILE( GLOB_RECURSE PROJECT_HEADERS include/*.h )
 
 project(${PROJECT_NAME})
@@ -26,4 +26,69 @@ set(testSources test/*.cpp)
 
 add_definitions(${GCC_COVERAGE_COMPILE_FLAGS})
 
-add_executable(${PROJECT_NAME} ${PROJECT_HEADERS} ${PROJECT_SOURCES})
+add_library(lib${PROJECT_NAME} ${PROJECT_HEADERS} ${PROJECT_SOURCES})
+set_target_properties(lib${PROJECT_NAME} PROPERTIES PREFIX "")
+#add_executable(${PROJECT_NAME} ${PROJECT_HEADERS} ${PROJECT_SOURCES})
+add_executable(${PROJECT_NAME} src/main/main.cpp )
+target_link_libraries(${PROJECT_NAME} lib${PROJECT_NAME})
+
+
+
+
+
+
+
+
+# We need thread support
+find_package(Threads REQUIRED)
+
+# Enable ExternalProject CMake module
+include(ExternalProject)
+
+# Download and install GoogleTest
+ExternalProject_Add(
+    gtest
+    URL https://github.com/google/googletest/archive/master.zip
+    PREFIX ${CMAKE_CURRENT_BINARY_DIR}/gtest
+    # Disable install step
+    INSTALL_COMMAND ""
+)
+
+# Get GTest source and binary directories from CMake project
+ExternalProject_Get_Property(gtest source_dir binary_dir)
+
+set(source_dir build/gtest/src/gtest)
+
+# Create a libgtest target to be used as a dependency by test programs
+add_library(libgtest IMPORTED STATIC GLOBAL)
+add_dependencies(libgtest gtest)
+
+# Set libgtest properties
+set_target_properties(libgtest PROPERTIES
+    "IMPORTED_LOCATION" "${binary_dir}/googlemock/gtest/libgtest.a"
+    "IMPORTED_LINK_INTERFACE_LIBRARIES" "${CMAKE_THREAD_LIBS_INIT}"
+)
+
+# Create a libgmock target to be used as a dependency by test programs
+add_library(libgmock IMPORTED STATIC GLOBAL)
+add_dependencies(libgmock gtest)
+
+# Set libgmock properties
+set_target_properties(libgmock PROPERTIES
+    "IMPORTED_LOCATION" "${binary_dir}/googlemock/libgmock.a"
+    "IMPORTED_LINK_INTERFACE_LIBRARIES" "${CMAKE_THREAD_LIBS_INIT}"
+)
+
+# I couldn't make it work with INTERFACE_INCLUDE_DIRECTORIES
+include_directories("${source_dir}/googletest/include"
+                    "${source_dir}/googlemock/include")
+
+add_executable(test${PROJECT_NAME} ${PROJECT_TEST_SOURCES})
+
+target_link_libraries(test${PROJECT_NAME}
+    lib${PROJECT_NAME}
+    libgtest
+    libgmock
+)
+
+install(TARGETS test${PROJECT_NAME} DESTINATION bin)

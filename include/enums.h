@@ -2,8 +2,8 @@
 #define CROCUS_ENUMS_H
 
 enum Force {
-    red = 1,
-    black = 2
+    RED = 1,
+    BLACK = 2
 };
 
 enum Kind {
