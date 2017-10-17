@@ -1,16 +1,19 @@
 #include <algorithm>
 #include <functional>
-#include "position.h"
+#include <list>
+#include "numbers.h"
 #include "common.h"
+#include "position.h"
+#include "positions.h"
 
-std::list<Position> range(const Position &from, const Position &to) {
+std::list<Position> Positions::range(const Position &from, const Position &to) {
     if (from.x() == to.x()) {
         int x = from.x();
         std::function<Position(int)> op = [x](int y) { return Position(x, y); };
-        return map(range(from.y(), to.y()), op);
+        return map(Numbers::range(from.y(), to.y()), op);
     } else {
         int y = from.y();
         std::function<Position(int)> op = [y](int x) { return Position(x, y); };
-        return map(range(from.x(), to.x()), op);
+        return map(Numbers::range(from.x(), to.x()), op);
     }
 }

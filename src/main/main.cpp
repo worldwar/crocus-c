@@ -1,11 +1,13 @@
 #include <stdio.h>
-#include "common.h"
+#include <list>
+#include "positions.h"
+#include "numbers.h"
 
 #include "position.h"
 
 int main() {
 
-    const std::list<int> &r = range(1, 6);
+    const std::list<int> &r = Numbers::range(1, 6);
 
     printf("size: %d\n", (int)r.size());
 
@@ -13,7 +15,7 @@ int main() {
         printf("x %d\n", p);
     }
     
-    const std::list<Position> &list = range(Position(1, 3), Position(5, 3));
+    const std::list<Position> &list = Positions::range(Position(1, 3), Position(5, 3));
     for (auto p : list) {
         printf("position %d %d\n", p.x(), p.y());
     }

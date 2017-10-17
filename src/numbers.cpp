@@ -1,8 +1,8 @@
 #include <list>
 #include <numeric>
-#include "common.h"
+#include "numbers.h"
 
-std::list<int> range(int from, int to) {
+std::list<int> Numbers::range(int from, int to) {
     if (from == to) {
         return std::list<int>();
     }

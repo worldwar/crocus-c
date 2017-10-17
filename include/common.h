@@ -18,9 +18,4 @@ bool all_match(C col, F op) {
     return std::all_of(col.begin(), col.end(), op);
 }
 
-std::list<int> range(int from, int to);
-
-std::list<Position> range(const Position &from, const Position &to);
-
-
 #endif //CROCUS_COMMON_H
