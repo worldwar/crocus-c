@@ -15,7 +15,15 @@ int main() {
         printf("x %d\n", p);
     }
     
-    const std::list<Position> &list = Positions::range(Position(1, 3), Position(5, 3));
+    const std::list<int> &t = Numbers::range(6, 1, true);
+
+    printf("size: %d\n", (int)t.size());
+
+    for (auto p : t) {
+        printf("x %d\n", p);
+    }
+    
+    const std::list<Position> &list = Positions::range(Position(5, 3), Position(1, 3));
     for (auto p : list) {
         printf("position %d %d\n", p.x(), p.y());
     }
