@@ -6,9 +6,9 @@
 TEST(RookActionRule, MoveInLine) {
   auto a = RookActionRule();
   auto b = Board();
-  auto rook = Piece{RED, ROOK, {1,1}};
-  auto knight = Piece{BLACK, KNIGHT, {1, 3}};
-  auto c = Action(rook, {1, 2}, MOVE);
+  auto rook = Piece{Force::RED, Kind::ROOK, {1,1}};
+  auto knight = Piece{Force::BLACK, Kind::KNIGHT, {1, 3}};
+  auto c = Action(rook, {1, 2}, ActionType::MOVE);
 
   EXPECT_EQ(true, a.legal(b, c));
 }

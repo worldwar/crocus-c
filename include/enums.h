@@ -1,12 +1,12 @@
 #ifndef CROCUS_ENUMS_H
 #define CROCUS_ENUMS_H
 
-enum Force {
+enum class Force {
     RED = 1,
     BLACK = 2
 };
 
-enum Kind {
+enum class Kind {
     KING = 1,
     ROOK = 2,
     KNIGHT = 3,
@@ -16,7 +16,7 @@ enum Kind {
     PAWN = 7
 };
 
-enum ActionType {
+enum class ActionType {
     MOVE = 1,
     CAPTURE = 2
 };
