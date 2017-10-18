@@ -1,6 +1,7 @@
 #include <list>
 #include <numeric>
 #include <cstdlib>
+#include <algorithm>
 #include "numbers.h"
 
 std::list<int> Numbers::range(int from, int to, bool include_endpoints) {

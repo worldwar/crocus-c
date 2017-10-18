@@ -3,6 +3,7 @@
 
 #include <list>
 #include <functional>
+#include <algorithm>
 
 class Position;
 
