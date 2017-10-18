@@ -53,7 +53,7 @@ std::list<Position> Positions::row(const Position &position) {
 }
 
 std::list<Position> Positions::row(int y) {
-    return range(Position(1,y), Position(9, y), true);
+    return range(Position(1, y), Position(9, y), true);
 }
 
 std::list<Position> Positions::column(const Position &position) {
@@ -62,6 +62,18 @@ std::list<Position> Positions::column(const Position &position) {
 
 std::list<Position> Positions::column(int x) {
     return range(Position(x, 1), Position(x, 10), true);
+}
+
+Position Positions::knightObstacle(const Position &from, const Position &to) {
+    if (xd(from, to) == 1) {
+        return range(from, Position(from.x(), to.y())).front();
+    } else {
+        return range(from, Position(to.x(), from.y())).front();
+    }
+}
+
+Position Positions::bishopObstacle(const Position &from, const Position &to) {
+    return Position{(from.x() + to.x()) / 2, (from.y() + to.y()) / 2};
 }
 
 

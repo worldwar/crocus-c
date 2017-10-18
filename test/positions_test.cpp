@@ -71,3 +71,21 @@ TEST(TestPositions, testPositionRangeOfRowsAndColumns) {
                                        Position(4, 5), Position(4, 6), Position(4, 7), Position(4, 8),
                                        Position(4, 9), Position(4, 10)));
 }
+
+TEST(TestPositions, testKnightObstacle) {
+    EXPECT_EQ(Positions::knightObstacle(Position(3, 3), Position(1, 2)), Position(2, 3));
+    EXPECT_EQ(Positions::knightObstacle(Position(3, 3), Position(2, 1)), Position(3, 2));
+    EXPECT_EQ(Positions::knightObstacle(Position(3, 3), Position(4, 1)), Position(3, 2));
+    EXPECT_EQ(Positions::knightObstacle(Position(3, 3), Position(5, 2)), Position(4, 3));
+    EXPECT_EQ(Positions::knightObstacle(Position(3, 3), Position(5, 4)), Position(4, 3));
+    EXPECT_EQ(Positions::knightObstacle(Position(3, 3), Position(4, 5)), Position(3, 4));
+    EXPECT_EQ(Positions::knightObstacle(Position(3, 3), Position(2, 5)), Position(3, 4));
+    EXPECT_EQ(Positions::knightObstacle(Position(3, 3), Position(1, 4)), Position(2, 3));
+}
+
+TEST(TestPositions, testBishopObstacle) {
+    EXPECT_EQ(Positions::bishopObstacle(Position(5, 3), Position(3, 1)), Position(4, 2));
+    EXPECT_EQ(Positions::bishopObstacle(Position(5, 3), Position(7, 1)), Position(6, 2));
+    EXPECT_EQ(Positions::bishopObstacle(Position(5, 3), Position(7, 5)), Position(6, 4));
+    EXPECT_EQ(Positions::bishopObstacle(Position(5, 3), Position(3, 5)), Position(4, 4));
+}

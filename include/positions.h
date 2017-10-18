@@ -28,6 +28,10 @@ public:
     static std::list<Position> column(const Position &position);
 
     static std::list<Position> column(int x);
+
+    static Position knightObstacle(const Position &from, const Position &to);
+
+    static Position bishopObstacle(const Position &from, const Position &to);
 };
 
 #endif //CROCUS_POSITIONS_H
