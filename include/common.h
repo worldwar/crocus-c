@@ -19,4 +19,9 @@ bool all_match(C col, F op) {
     return std::all_of(col.begin(), col.end(), op);
 }
 
+template<typename T>
+bool contains(std::list<T> col, T v) {
+    return (std::find(col.begin(), col.end(), v)) != col.end();
+}
+
 #endif //CROCUS_COMMON_H

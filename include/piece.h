@@ -28,6 +28,9 @@ public:
         return _position;
     }
 
+    void setPosition(const Position& position) {
+        _position = position;
+    }
 };
 
 #endif //CROCUS_PIECE_H
