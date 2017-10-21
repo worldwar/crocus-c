@@ -93,3 +93,5 @@ target_link_libraries(test${PROJECT_NAME}
 )
 
 install(TARGETS test${PROJECT_NAME} DESTINATION bin)
+
+include(check-format.cmake)
