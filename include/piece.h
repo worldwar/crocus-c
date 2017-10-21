@@ -29,6 +29,14 @@ public:
     void setPosition(const Position &position) {
         _position = position;
     }
+
+    bool red() const {
+        return _force == Force::RED;
+    }
+
+    bool black() const {
+        return !red();
+    }
 };
 
 #endif // CROCUS_PIECE_H

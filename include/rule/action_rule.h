@@ -1,6 +1,8 @@
 #ifndef CROCUS_ACTION_RULE_H
 #define CROCUS_ACTION_RULE_H
 
+#include <enums.h>
+
 class Board;
 class Action;
 
@@ -13,4 +15,50 @@ class RookActionRule : public ActionRule {
 public:
     bool legal(const Board &board, const Action &action) const override;
 };
+
+template <Kind>
+class PieceActionRule : public ActionRule {};
+
+template <>
+class PieceActionRule<Kind::KING> : public ActionRule {
+public:
+    bool legal(const Board &board, const Action &action) const override;
+};
+
+template <>
+class PieceActionRule<Kind::ROOK> : public ActionRule {
+public:
+    bool legal(const Board &board, const Action &action) const override;
+};
+
+template <>
+class PieceActionRule<Kind::KNIGHT> : public ActionRule {
+public:
+    bool legal(const Board &board, const Action &action) const override;
+};
+
+template <>
+class PieceActionRule<Kind::GUN> : public ActionRule {
+public:
+    bool legal(const Board &board, const Action &action) const override;
+};
+
+template <>
+class PieceActionRule<Kind::BISHOP> : public ActionRule {
+public:
+    bool legal(const Board &board, const Action &action) const override;
+};
+
+template <>
+class PieceActionRule<Kind::GUARD> : public ActionRule {
+public:
+    bool legal(const Board &board, const Action &action) const override;
+};
+
+template <>
+class PieceActionRule<Kind::PAWN> : public ActionRule {
+public:
+    bool legal(const Board &board, const Action &action) const override;
+};
+
 #endif // CROCUS_ACTION_RULE_H
