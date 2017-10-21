@@ -76,6 +76,41 @@ TEST(KnightActionRule, testRuleForKnight) {
     EXPECT_TRUE(rule.legal(board, obstacleActionByKing2));
 }
 
+TEST(CheckedRule, testCheckable) {
+    Board board = Board();
+    board.reset();
+
+    Piece *redRook = board.piece({1, 1});
+    Piece *redGun = board.piece({2, 3});
+    EXPECT_FALSE(board.checkable(redRook));
+    EXPECT_FALSE(board.checkable(redGun));
+
+    board.move(redRook, {5, 8});
+    board.move(redGun, {5, 6});
+    EXPECT_TRUE(board.checkable(redRook));
+    EXPECT_FALSE(board.checkable(redGun));
+    board.move(redRook, {1, 1});
+    EXPECT_TRUE(board.checkable(redGun));
+}
+
+TEST(CheckedRule, testForceChecked) {
+    Board board = Board();
+    board.reset();
+
+    EXPECT_FALSE(board.checked(Force::RED));
+    Piece *blackKnight = board.piece({2, 10});
+    Piece *blackPawn = board.piece({1, 7});
+
+    board.move(blackKnight, {3, 2});
+    EXPECT_TRUE(board.checked(Force::RED));
+    board.move(blackPawn, {4, 2});
+    EXPECT_FALSE(board.checked(Force::RED));
+    board.move(blackPawn, {5, 2});
+    EXPECT_TRUE(board.checked(Force::RED));
+    board.move(blackKnight, {2, 10});
+    EXPECT_TRUE(board.checked(Force::RED));
+}
+
 int main(int argc, char **argv) {
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();

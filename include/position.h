@@ -41,6 +41,10 @@ public:
         return _x == position._x && _y == position._y;
     }
 
+    bool operator!=(const Position &position) const {
+        return !(*this == position);
+    }
+
     bool legal() const {
         return _x >= 1 && _x <= 9 && _y >= 1 && _y <= 10;
     }

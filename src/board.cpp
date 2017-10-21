@@ -1,8 +1,10 @@
 
+#include "common.h"
 #include <board.h>
 #include <functional>
 #include <list>
 #include <position.h>
+#include <rule/action_rule.h>
 
 int Board::count(const std::list<Position> &range) const {
     auto pred = [this](auto position) { return this->occupied(position); };
@@ -80,4 +82,55 @@ void Board::reset() {
     place(new Piece{Force::BLACK, Kind::PAWN, {5, 7}});
     place(new Piece{Force::BLACK, Kind::PAWN, {3, 7}});
     place(new Piece{Force::BLACK, Kind::PAWN, {1, 7}});
+}
+
+Board Board::tryApply(const Action &action) const {
+    Board board = duplicate();
+    board.apply(action);
+    return board;
+}
+
+Board Board::duplicate() const {
+    Board board = Board();
+    std::function<void(Piece *)> op = [&](Piece *piece) {
+        board.place(piece->duplicate());
+    };
+    each(all(), op);
+    return board;
+}
+
+Board::~Board() {
+    std::function<void(Piece * piece)> op = [](auto piece) { delete piece; };
+    each(all(), op);
+}
+
+void Board::apply(const Action &action) {
+    Piece *piece = this->piece(action.piece().position());
+    Position to = action.target();
+    if (action.actionType() == ActionType::CAPTURE) {
+        makeEmpty(to);
+    }
+    move(piece, to);
+}
+
+bool Board::checked(Force force) const {
+    auto pieces = forcePieces(opposed(force));
+    return any_match(pieces,
+                     [this](auto piece) { return this->checkable(piece); });
+}
+
+bool Board::checkable(const Piece *piece) const {
+    Piece *opposedKing = king(opposed(piece->force()));
+    Action action =
+        Action(*piece, opposedKing->position(), ActionType::CAPTURE);
+    auto rule = ActionRule::rule(piece->kind());
+    return rule->legal(*this, action);
+}
+
+bool Board::exists(const Piece *piece) const {
+    if (!piece->position().legal())
+        return false;
+    Piece *realPiece = this->piece(piece->position());
+    return realPiece != nullptr && piece->force() == realPiece->force() &&
+           piece->kind() == piece->kind();
 }

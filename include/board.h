@@ -5,12 +5,16 @@
 #include "common.h"
 #include "piece.h"
 #include "position.h"
+#include <map>
+#include <rule/action_rule.h>
 
 class Board {
 private:
     Piece *_positions[10][11];
 
 public:
+    ~Board();
+
     void place(Piece *const piece, const Position &position) {
         piece->setPosition(position);
         _positions[position.x()][position.y()] = piece;
@@ -70,6 +74,18 @@ public:
     }
 
     void reset();
+
+    Board tryApply(const Action &action) const;
+
+    void apply(const Action &action);
+
+    Board duplicate() const;
+
+    bool checked(Force force) const;
+
+    bool checkable(const Piece *piece) const;
+
+    bool exists(const Piece *piece) const;
 };
 
 #endif // CROCUS_BOARD_H

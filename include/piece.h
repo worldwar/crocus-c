@@ -37,6 +37,10 @@ public:
     bool black() const {
         return !red();
     }
+
+    Piece *duplicate() const {
+        return new Piece{_force, _kind, _position};
+    }
 };
 
 #endif // CROCUS_PIECE_H

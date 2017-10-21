@@ -82,3 +82,52 @@ bool PieceActionRule<Kind::PAWN>::legal(const Board &board,
             (piece.black() && to.y() <= from.y())) &&
            (!Positions::inForceArea(from, piece.force()) || to.x() == from.x());
 }
+
+bool CheckedRule::legal(const Board &board, const Action &action) const {
+    Force force = action.piece().force();
+    Board b = board.tryApply(action);
+    return !b.checked(force);
+}
+
+const ActionRule *ActionRule::rule(Kind kind) {
+    static std::map<Kind, const ActionRule *> rules;
+    if (rules.empty()) {
+        rules.insert({Kind::KING, new PieceActionRule<Kind::KING>()});
+        rules.insert({Kind::ROOK, new PieceActionRule<Kind::ROOK>()});
+        rules.insert({Kind::KNIGHT, new PieceActionRule<Kind::KNIGHT>()});
+        rules.insert({Kind::BISHOP, new PieceActionRule<Kind::BISHOP>()});
+        rules.insert({Kind::GUARD, new PieceActionRule<Kind::GUARD>()});
+        rules.insert({Kind::GUN, new PieceActionRule<Kind::GUN>()});
+        rules.insert({Kind::PAWN, new PieceActionRule<Kind::PAWN>()});
+    }
+    return rules.at(kind);
+}
+
+bool ExistenceRule::legal(const Board &board, const Action &action) const {
+    Piece piece = action.piece();
+    return board.exists(&piece) &&
+           board.actionType(action.target()) == action.actionType();
+}
+
+bool KingFaceRule::legal(const Board &board, const Action &action) const {
+    Board b = board.tryApply(action);
+    Piece piece = action.piece();
+    Position kingPosition = b.king(piece.force())->position();
+    Position opposedKingPosition =
+        board.king(opposed(piece.force()))->position();
+    if (Positions::xd(kingPosition, opposedKingPosition) == 0) {
+        return !board.empty(
+            Positions::range(kingPosition, opposedKingPosition));
+    }
+    return true;
+}
+
+bool PositionChangeRule::legal(const Board &board, const Action &action) const {
+    return action.piece().position() != action.target();
+}
+
+bool TargetForceRule::legal(const Board &board, const Action &action) const {
+    Position position = action.target();
+    Piece *piece = board.piece(position);
+    return piece == nullptr || piece->force() != action.piece().force();
+}

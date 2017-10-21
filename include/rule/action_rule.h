@@ -9,6 +9,7 @@ class Action;
 class ActionRule {
 public:
     virtual bool legal(const Board &board, const Action &action) const = 0;
+    static const ActionRule *rule(Kind kind);
 };
 
 class RookActionRule : public ActionRule {
@@ -57,6 +58,31 @@ public:
 
 template <>
 class PieceActionRule<Kind::PAWN> : public ActionRule {
+public:
+    bool legal(const Board &board, const Action &action) const override;
+};
+
+class CheckedRule : public ActionRule {
+public:
+    bool legal(const Board &board, const Action &action) const override;
+};
+
+class ExistenceRule : public ActionRule {
+public:
+    bool legal(const Board &board, const Action &action) const override;
+};
+
+class KingFaceRule : public ActionRule {
+public:
+    bool legal(const Board &board, const Action &action) const override;
+};
+
+class PositionChangeRule : public ActionRule {
+public:
+    bool legal(const Board &board, const Action &action) const override;
+};
+
+class TargetForceRule : public ActionRule {
 public:
     bool legal(const Board &board, const Action &action) const override;
 };
