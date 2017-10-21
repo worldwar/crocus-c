@@ -1,13 +1,11 @@
-#include <algorithm>
-#include <functional>
-#include <list>
-#include <cassert>
-#include "numbers.h"
-#include "common.h"
-#include "position.h"
 #include "positions.h"
+#include "common.h"
+#include "numbers.h"
+#include "position.h"
+#include <cassert>
 
-std::list<Position> Positions::range(const Position &from, const Position &to, bool include_endpoints) {
+std::list<Position> Positions::range(const Position &from, const Position &to,
+                                     bool include_endpoints) {
     assert(from.in_line(to));
     if (from.x() == to.x()) {
         int x = from.x();
@@ -75,5 +73,3 @@ Position Positions::knightObstacle(const Position &from, const Position &to) {
 Position Positions::bishopObstacle(const Position &from, const Position &to) {
     return Position{(from.x() + to.x()) / 2, (from.y() + to.y()) / 2};
 }
-
-

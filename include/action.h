@@ -8,16 +8,13 @@ class Position;
 
 class Action {
 private:
-    Piece  _piece;
+    Piece _piece;
     Position _target;
     ActionType _type;
 
 public:
-    Action(Piece piece, Position target, ActionType type) :
-            _piece(piece),
-            _target(target),
-            _type(type) {
-    }
+    Action(Piece piece, Position target, ActionType type)
+        : _piece(piece), _target(target), _type(type) {}
 
     inline Piece piece() const {
         return _piece;
@@ -32,4 +29,4 @@ public:
     }
 };
 
-#endif //CROCUS_ACTION_H
+#endif // CROCUS_ACTION_H

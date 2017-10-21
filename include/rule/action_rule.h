@@ -6,12 +6,11 @@ class Action;
 
 class ActionRule {
 public:
-    virtual bool legal(const Board& board, const Action& action) const = 0;
+    virtual bool legal(const Board &board, const Action &action) const = 0;
 };
 
 class RookActionRule : public ActionRule {
 public:
-    bool legal(const Board& board, const Action& action) const override;
-
+    bool legal(const Board &board, const Action &action) const override;
 };
-#endif //CROCUS_ACTION_RULE_H
+#endif // CROCUS_ACTION_RULE_H

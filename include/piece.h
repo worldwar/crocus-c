@@ -11,10 +11,8 @@ private:
     Position _position;
 
 public:
-    Piece(Force force, Kind kind, Position position) :
-            _force(force),
-            _kind(kind),
-            _position(position) {}
+    Piece(Force force, Kind kind, Position position)
+        : _force(force), _kind(kind), _position(position) {}
 
     Force force() const {
         return _force;
@@ -28,9 +26,9 @@ public:
         return _position;
     }
 
-    void setPosition(const Position& position) {
+    void setPosition(const Position &position) {
         _position = position;
     }
 };
 
-#endif //CROCUS_PIECE_H
+#endif // CROCUS_PIECE_H

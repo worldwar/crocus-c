@@ -1,15 +1,16 @@
 #ifndef CROCUS_POSITIONS_H
 #define CROCUS_POSITIONS_H
 
-#include <list>
-#include <cstdlib>
 #include "enums.h"
+#include <cstdlib>
+#include <list>
 
 class Position;
 
 class Positions {
 public:
-    static std::list<Position> range(const Position &from, const Position &to, bool include_endpoints = false);
+    static std::list<Position> range(const Position &from, const Position &to,
+                                     bool include_endpoints = false);
 
     static bool inForceArea(const Position &position, Force force);
 
@@ -34,4 +35,4 @@ public:
     static Position bishopObstacle(const Position &from, const Position &to);
 };
 
-#endif //CROCUS_POSITIONS_H
+#endif // CROCUS_POSITIONS_H

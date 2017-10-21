@@ -1,8 +1,6 @@
-#include <list>
-#include <numeric>
-#include <cstdlib>
-#include <algorithm>
 #include "numbers.h"
+#include <cstdlib>
+#include <numeric>
 
 std::list<int> Numbers::range(int from, int to, bool include_endpoints) {
     int size = include_endpoints ? abs(from - to) + 1 : abs(from - to) - 1;
@@ -14,6 +12,7 @@ std::list<int> Numbers::range(int from, int to, bool include_endpoints) {
 
     std::list<int> result(size);
     std::iota(result.begin(), result.end(), from + 1);
-    std::generate(result.begin(), result.end(), [&n, &delta]{return n += delta;});
+    std::generate(result.begin(), result.end(),
+                  [&n, &delta] { return n += delta; });
     return result;
 }

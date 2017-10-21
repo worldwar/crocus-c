@@ -1,8 +1,8 @@
 
-#include <list>
-#include <functional>
-#include <position.h>
 #include <board.h>
+#include <functional>
+#include <list>
+#include <position.h>
 
 int Board::count(const std::list<Position> &range) const {
     auto pred = [this](auto position) { return this->occupied(position); };
@@ -19,7 +19,7 @@ Piece *Board::selectOne(std::function<bool(Piece *)> p) const {
 
 std::list<Piece *> Board::select(std::function<bool(Piece *)> p) const {
     std::list<Piece *> result;
-    for (auto &row  : _positions) {
+    for (auto &row : _positions) {
         for (Piece *piece : row) {
             if (piece != nullptr) {
                 if (p(piece)) {
@@ -29,11 +29,12 @@ std::list<Piece *> Board::select(std::function<bool(Piece *)> p) const {
         }
     }
     return result;
-
 }
 
 Piece *Board::king(Force force) const {
-    return selectOne([force](auto piece) { return piece->kind() == Kind::KING && piece->force() == force; });
+    return selectOne([force](auto piece) {
+        return piece->kind() == Kind::KING && piece->force() == force;
+    });
 }
 
 std::list<Piece *> Board::forcePieces(Force force) const {

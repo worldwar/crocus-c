@@ -7,11 +7,7 @@ private:
     int _y;
 
 public:
-    Position(int x, int y) :
-            _x(x),
-            _y(y) {
-
-    }
+    Position(int x, int y) : _x(x), _y(y) {}
 
     int x() const {
         return _x;
@@ -46,15 +42,12 @@ public:
     }
 
     bool legal() const {
-        return _x >= 1 &&
-               _x <= 9 &&
-               _y >= 1 &&
-               _y <= 10;
+        return _x >= 1 && _x <= 9 && _y >= 1 && _y <= 10;
     }
 
-    bool in_line(const Position& position) const {
+    bool in_line(const Position &position) const {
         return _x == position._x || _y == position._y;
     }
 };
 
-#endif //CROCUS_POSITION_H
+#endif // CROCUS_POSITION_H

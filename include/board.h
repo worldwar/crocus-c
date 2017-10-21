@@ -1,10 +1,10 @@
 #ifndef CROCUS_BOARD_H
 #define CROCUS_BOARD_H
 
-#include "position.h"
+#include "action.h"
 #include "common.h"
 #include "piece.h"
-#include "action.h"
+#include "position.h"
 
 class Board {
 private:
@@ -30,7 +30,9 @@ public:
     }
 
     bool empty(const std::list<Position> &range) const {
-        return all_match(range, [this](const Position &position) { return empty(position); });
+        return all_match(range, [this](const Position &position) {
+            return empty(position);
+        });
     }
 
     Piece *piece(const Position &position) const {
@@ -70,4 +72,4 @@ public:
     void reset();
 };
 
-#endif //CROCUS_BOARD_H
+#endif // CROCUS_BOARD_H

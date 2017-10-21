@@ -1,7 +1,7 @@
+#include <board.h>
 #include <gtest/gtest.h>
 #include <position.h>
 #include <positions.h>
-#include <board.h>
 
 TEST(TestBoard, testPlaceAPiece) {
     auto position = Position(1, 2);
@@ -20,7 +20,6 @@ TEST(TestBoard, testAPositionIsEmptyOrNot) {
     board.place(piece, position);
     EXPECT_TRUE(board.occupied(position));
 }
-
 
 TEST(TestBoard, testPieceCountInRange) {
     auto position = Position(2, 2);
@@ -46,7 +45,8 @@ TEST(TestBoard, testSelectPiecesMatchSpecifiedCondition) {
     board.place(blackRook);
     board.place(blackKnight);
 
-    const std::list<Piece *> &list = board.select([](auto piece) { return piece->kind() == Kind::ROOK; });
+    const std::list<Piece *> &list =
+        board.select([](auto piece) { return piece->kind() == Kind::ROOK; });
     EXPECT_EQ(list.size(), 2);
     EXPECT_TRUE(contains(list, redRook));
     EXPECT_TRUE(contains(list, blackRook));
@@ -66,8 +66,7 @@ TEST(TestBoard, testSelectOnePieceMatchSpecifiedCondition) {
     board.place(blackKnight);
 
     auto piece = board.selectOne([](auto piece) {
-        return piece->kind() == Kind::KNIGHT &&
-               piece->force() == Force::BLACK;
+        return piece->kind() == Kind::KNIGHT && piece->force() == Force::BLACK;
     });
     EXPECT_EQ(piece, blackKnight);
 }

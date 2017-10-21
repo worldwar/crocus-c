@@ -1,7 +1,7 @@
-#include <stdio.h>
-#include <list>
-#include "positions.h"
 #include "numbers.h"
+#include "positions.h"
+#include <list>
+#include <stdio.h>
 
 #include "position.h"
 
@@ -14,7 +14,7 @@ int main() {
     for (auto p : r) {
         printf("x %d\n", p);
     }
-    
+
     const std::list<int> &t = Numbers::range(6, 1, true);
 
     printf("size: %d\n", (int)t.size());
@@ -22,8 +22,9 @@ int main() {
     for (auto p : t) {
         printf("x %d\n", p);
     }
-    
-    const std::list<Position> &list = Positions::range(Position(5, 3), Position(1, 3));
+
+    const std::list<Position> &list =
+        Positions::range(Position(5, 3), Position(1, 3));
     for (auto p : list) {
         printf("position %d %d\n", p.x(), p.y());
     }
