@@ -1,7 +1,9 @@
 
 #include "common.h"
 #include <board.h>
+#include <domain.h>
 #include <plan/plan.h>
+#include <string>
 
 int Board::count(const std::list<Position> &range) const {
     auto pred = [this](auto position) { return this->occupied(position); };
@@ -145,4 +147,15 @@ bool Board::legal(const Action &action) const {
     return all_match(rules, [this, action](const ActionRule *rule) {
         return rule->legal(*this, action);
     });
+}
+
+std::string Board::print() const {
+    std::string s;
+    for (int y = 10; y >= 1; y--) {
+        for (int x = 9; x >= 1; x--) {
+            s.append(domain::symbol(_positions[x][y]));
+        }
+        s.append("\n");
+    }
+    return s;
 }

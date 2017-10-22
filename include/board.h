@@ -6,6 +6,8 @@
 #include "piece.h"
 #include "position.h"
 #include <map>
+#include <string>
+
 #include <rule/action_rule.h>
 
 class Board {
@@ -90,6 +92,8 @@ public:
     bool checkmated(Force force) const;
 
     bool legal(const Action &action) const;
+
+    std::string print() const;
 };
 
 #endif // CROCUS_BOARD_H

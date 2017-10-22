@@ -1,10 +1,7 @@
 #include "numbers.h"
 #include "positions.h"
-#include <list>
-#include <stdio.h>
-
-#include "position.h"
-
+#include <board.h>
+#include <iostream>
 int main() {
 
     const std::list<int> &r = Numbers::range(1, 6);
@@ -28,4 +25,13 @@ int main() {
     for (auto p : list) {
         printf("position %d %d\n", p.x(), p.y());
     }
+
+    Board board = Board();
+
+    board.reset();
+
+    Piece *p = board.piece({2, 1});
+    board.move(p, {3, 3});
+
+    std::cout << board.print();
 }

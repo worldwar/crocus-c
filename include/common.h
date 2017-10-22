@@ -49,5 +49,10 @@ std::list<R> map(std::list<C> col, std::function<R(C)> op) {
     std::transform(col.begin(), col.end(), std::back_inserter(r), op);
     return r;
 }
+
+template <typename T>
+int cast(T t) {
+    return static_cast<int>(t);
+}
 } // namespace common
 #endif // CROCUS_COMMON_H
