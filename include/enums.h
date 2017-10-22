@@ -15,4 +15,8 @@ enum class Kind {
 
 enum class ActionType { MOVE = 1, CAPTURE = 2 };
 
+enum class GameState { NOT_STARTED = 1, STARTED = 2, ENDED = 3 };
+
+enum class GameResult { RED_WIN = 1, BLACK_WIN = 2, DRAW = 3 };
+
 #endif // CROCUS_ENUMS_H
