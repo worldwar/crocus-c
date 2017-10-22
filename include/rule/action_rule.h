@@ -2,6 +2,7 @@
 #define CROCUS_ACTION_RULE_H
 
 #include <enums.h>
+#include <list>
 
 class Board;
 class Action;
@@ -10,6 +11,7 @@ class ActionRule {
 public:
     virtual bool legal(const Board &board, const Action &action) const = 0;
     static const ActionRule *rule(Kind kind);
+    static const std::list<const ActionRule *> rulesOf(Kind kind);
 };
 
 class RookActionRule : public ActionRule {

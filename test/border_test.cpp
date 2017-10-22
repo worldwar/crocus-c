@@ -78,3 +78,21 @@ TEST(TestBoard, testMakeEmpty) {
     board.makeEmpty({5, 5});
     EXPECT_EQ(board.piece({5, 5}), nullptr);
 }
+
+TEST(TestBoard, testForceIsCheckmated) {
+    auto board = Board();
+    board.reset();
+    Piece *redKnight = board.piece({2, 1});
+    Piece *redGun = board.piece({2, 3});
+
+    EXPECT_FALSE(board.checked(Force::BLACK));
+    EXPECT_FALSE(board.checkmated(Force::BLACK));
+
+    board.move(redKnight, {3, 9});
+    EXPECT_TRUE(board.checked(Force::BLACK));
+    EXPECT_FALSE(board.checkmated(Force::BLACK));
+
+    board.move(redGun, {2, 9});
+    EXPECT_TRUE(board.checked(Force::BLACK));
+    EXPECT_TRUE(board.checkmated(Force::BLACK));
+}

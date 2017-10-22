@@ -86,6 +86,10 @@ public:
     bool checkable(const Piece *piece) const;
 
     bool exists(const Piece *piece) const;
+
+    bool checkmated(Force force) const;
+
+    bool legal(const Action &action) const;
 };
 
 #endif // CROCUS_BOARD_H

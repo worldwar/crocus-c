@@ -30,6 +30,8 @@ public:
 
     static std::list<Position> column(int x);
 
+    static std::list<Position> cross(const Position &position);
+
     static Position knightObstacle(const Position &from, const Position &to);
 
     static Position bishopObstacle(const Position &from, const Position &to);

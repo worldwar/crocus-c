@@ -73,3 +73,10 @@ Position Positions::knightObstacle(const Position &from, const Position &to) {
 Position Positions::bishopObstacle(const Position &from, const Position &to) {
     return Position{(from.x() + to.x()) / 2, (from.y() + to.y()) / 2};
 }
+
+std::list<Position> Positions::cross(const Position &position) {
+    std::list<Position> positions = Positions::row(position);
+    positions.remove(position);
+    positions.splice(positions.end(), Positions::column(position));
+    return positions;
+}

@@ -1,10 +1,7 @@
 
 #include "common.h"
 #include <board.h>
-#include <functional>
-#include <list>
-#include <position.h>
-#include <rule/action_rule.h>
+#include <plan/plan.h>
 
 int Board::count(const std::list<Position> &range) const {
     auto pred = [this](auto position) { return this->occupied(position); };
@@ -133,4 +130,19 @@ bool Board::exists(const Piece *piece) const {
     Piece *realPiece = this->piece(piece->position());
     return realPiece != nullptr && piece->force() == realPiece->force() &&
            piece->kind() == piece->kind();
+}
+
+bool Board::checkmated(Force force) const {
+    return none_match(forcePieces(force), [this](const Piece *piece) {
+        return any_match(
+            Plan::planOf(piece->kind()).plan(*this, piece),
+            [this](const Action &action) { return this->legal(action); });
+    });
+}
+
+bool Board::legal(const Action &action) const {
+    auto &rules = ActionRule::rulesOf(action.piece().kind());
+    return all_match(rules, [this, action](const ActionRule *rule) {
+        return rule->legal(*this, action);
+    });
 }

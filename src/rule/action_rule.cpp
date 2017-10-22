@@ -103,6 +103,27 @@ const ActionRule *ActionRule::rule(Kind kind) {
     return rules.at(kind);
 }
 
+const std::list<const ActionRule *> ActionRule::rulesOf(Kind kind) {
+    static std::list<ActionRule *> basicRules;
+    static std::list<ActionRule *> globalRules;
+    if (basicRules.empty()) {
+        basicRules.push_back(new ExistenceRule());
+        basicRules.push_back(new PositionChangeRule());
+        basicRules.push_back(new TargetForceRule());
+    }
+    if (globalRules.empty()) {
+        globalRules.push_back(new CheckedRule());
+        globalRules.push_back(new KingFaceRule());
+    }
+
+    std::list<const ActionRule *> rules;
+
+    rules.insert(rules.begin(), basicRules.begin(), basicRules.end());
+    rules.push_back(rule(kind));
+    rules.insert(rules.end(), globalRules.begin(), globalRules.end());
+    return rules;
+}
+
 bool ExistenceRule::legal(const Board &board, const Action &action) const {
     Piece piece = action.piece();
     return board.exists(&piece) &&
