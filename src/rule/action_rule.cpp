@@ -46,7 +46,7 @@ bool PieceActionRule<Kind::GUN>::legal(const Board &board,
         bool in_line = piece.position().in_line(to);
         if (!in_line)
             return false;
-        std::list<Position> range = Positions ::range(piece.position(), to);
+        std::list<Position> range = Positions::range(piece.position(), to);
         return board.count(range) == 1;
     }
 }

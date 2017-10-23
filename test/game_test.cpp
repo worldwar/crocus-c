@@ -13,7 +13,8 @@ TEST(TestGame, testGamePlay) {
 
     const TimePoint &turnStartDate = game.turnStartDate();
     EXPECT_EQ(game.turn(), Force::BLACK);
-    EXPECT_EQ(game.forceUsedTime(Force::RED), common::duration(turnStartDate, startDate));
+    EXPECT_EQ(game.forceUsedTime(Force::RED),
+              common::duration(turnStartDate, startDate));
 
     game.play({9, 7}, {9, 6});
     EXPECT_EQ(game.turn(), Force::RED);
