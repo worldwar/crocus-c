@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.6)
 
 set(PROJECT_NAME "crocus")
+set(SFML_CLIENT_NAME "sfmlcrocus")
 set(PROJECT_PATH      ${CMAKE_SOURCE_DIR} )
 set(PROJECT_OUT_PATH  ${CMAKE_BINARY_DIR} )
 set(PROJECT_INCLUDES  "include" )
@@ -19,12 +20,15 @@ project(${PROJECT_NAME})
 
 include_directories(${PROJECT_INCLUDES})
 
-include_directories($ENV{GMOCK_HOME}/include $ENV{GMOCK_HOME}/gtest/include)
-link_directories($ENV{GMOCK_HOME}/mybuild $ENV{GMOCK_HOME}/gtest/mybuild)
-
 set(testSources test/*.cpp)
 
+set(myproject_VERSION_MAJOR 1)
+set(myproject_VERSION_MINOR 0)
+
 add_definitions(${GCC_COVERAGE_COMPILE_FLAGS})
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
+find_package(SFML 2 REQUIRED network audio graphics window system)
+
 
 add_library(lib${PROJECT_NAME} ${PROJECT_HEADERS} ${PROJECT_SOURCES})
 set_target_properties(lib${PROJECT_NAME} PROPERTIES PREFIX "")
@@ -32,6 +36,11 @@ set_target_properties(lib${PROJECT_NAME} PROPERTIES PREFIX "")
 add_executable(${PROJECT_NAME} src/main/main.cpp )
 target_link_libraries(${PROJECT_NAME} lib${PROJECT_NAME})
 
+add_executable(${SFML_CLIENT_NAME} src/client/main.cpp)
+if(SFML_FOUND)
+    include_directories(${SFML_INCLUDE_DIR})
+    target_link_libraries(${SFML_CLIENT_NAME} lib${PROJECT_NAME} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
+endif()
 
 
 
