@@ -153,7 +153,12 @@ std::string Board::print() const {
     std::string s;
     for (int y = 10; y >= 1; y--) {
         for (int x = 9; x >= 1; x--) {
-            s.append(domain::symbol(_positions[x][y]));
+            Piece *piece = _positions[x][y];
+            if (piece == nullptr) {
+                s.append(domain::border({x, y}));
+            } else {
+                s.append(domain::symbol(piece));
+            }
         }
         s.append("\n");
     }

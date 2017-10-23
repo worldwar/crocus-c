@@ -31,7 +31,9 @@ int main() {
     board.reset();
 
     Piece *p = board.piece({2, 1});
+    Piece *rook = board.piece({1, 1});
     board.move(p, {3, 3});
+    board.move(rook, {1, 3});
 
     std::cout << board.print();
 }
