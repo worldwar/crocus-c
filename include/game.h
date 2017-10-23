@@ -4,10 +4,6 @@
 #include "board.h"
 #include <chrono>
 
-using Clock = std::chrono::system_clock;
-using TimePoint = std::chrono::system_clock::time_point;
-using Duration = std::chrono::microseconds;
-
 class Game {
 private:
     Board _board;
@@ -98,7 +94,7 @@ private:
 
     void turnNext() {
         TimePoint now = Clock::now();
-        Duration duration = now - _turnStartDate;
+        Duration duration = common::duration(now, _turnStartDate);
         addUsedTime(_turn, duration);
         _turn = opposed(_turn);
         _turnStartDate = now;

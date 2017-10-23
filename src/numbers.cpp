@@ -1,4 +1,5 @@
 #include "numbers.h"
+#include <algorithm>
 #include <cstdlib>
 #include <numeric>
 

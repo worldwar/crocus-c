@@ -3,8 +3,13 @@
 
 #include "enums.h"
 #include <algorithm>
+#include <chrono>
 #include <functional>
 #include <list>
+
+using Clock = std::chrono::system_clock;
+using TimePoint = std::chrono::system_clock::time_point;
+using Duration = std::chrono::microseconds;
 
 class Position;
 
@@ -54,5 +59,8 @@ template <typename T>
 int cast(T t) {
     return static_cast<int>(t);
 }
+
+Duration duration(const TimePoint &from, const TimePoint &to);
+
 } // namespace common
 #endif // CROCUS_COMMON_H
