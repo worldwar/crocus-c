@@ -48,19 +48,19 @@ bool contains(std::list<T> col, T v) {
 Force opposed(Force force);
 
 namespace common {
-template <typename R, typename C>
-std::list<R> map(std::list<C> col, std::function<R(C)> op) {
-    std::list<R> r;
-    std::transform(col.begin(), col.end(), std::back_inserter(r), op);
-    return r;
-}
+    template <typename R, typename C>
+    std::list<R> map(std::list<C> col, std::function<R(C)> op) {
+        std::list<R> r;
+        std::transform(col.begin(), col.end(), std::back_inserter(r), op);
+        return r;
+    }
 
-template <typename T>
-int cast(T t) {
-    return static_cast<int>(t);
-}
+    template <typename T>
+    int cast(T t) {
+        return static_cast<int>(t);
+    }
 
-Duration duration(const TimePoint &from, const TimePoint &to);
+    Duration duration(const TimePoint &from, const TimePoint &to);
 
 } // namespace common
 #endif // CROCUS_COMMON_H

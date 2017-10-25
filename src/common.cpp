@@ -9,7 +9,7 @@ Force opposed(Force force) {
 };
 
 namespace common {
-Duration duration(const TimePoint &from, const TimePoint &to) {
-    return std::chrono::duration_cast<std::chrono::milliseconds>(to - from);
-}
-}
+    Duration duration(const TimePoint &from, const TimePoint &to) {
+        return std::chrono::duration_cast<std::chrono::milliseconds>(to - from);
+    }
+} // namespace common

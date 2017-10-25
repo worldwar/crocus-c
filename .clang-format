@@ -6,3 +6,4 @@ AlwaysBreakTemplateDeclarations: true
 AllowShortFunctionsOnASingleLine: Empty
 AlwaysBreakAfterReturnType: None
 BinPackArguments: true
+NamespaceIndentation: All
