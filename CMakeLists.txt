@@ -36,7 +36,7 @@ set_target_properties(lib${PROJECT_NAME} PROPERTIES PREFIX "")
 add_executable(${PROJECT_NAME} src/main/main.cpp )
 target_link_libraries(${PROJECT_NAME} lib${PROJECT_NAME})
 
-add_executable(${SFML_CLIENT_NAME} src/client/main.cpp)
+add_executable(${SFML_CLIENT_NAME} src/client/main.cpp src/client/client_game.cpp)
 if(SFML_FOUND)
     include_directories(${SFML_INCLUDE_DIR})
     target_link_libraries(${SFML_CLIENT_NAME} lib${PROJECT_NAME} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})

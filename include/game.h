@@ -64,6 +64,10 @@ public:
         return _state == GameState::ENDED;
     }
 
+    Board &board() {
+        return _board;
+    }
+
 private:
     void next() {
         settle();

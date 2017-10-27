@@ -1,7 +1,4 @@
-#ifndef CROCUS_CLIENT_COMMON_H
-#define CROCUS_CLIENT_COMMON_H
-
-#include <enums.h>
+#include <common.h>
 #include <position.h>
 
 namespace common {
@@ -13,5 +10,3 @@ namespace common {
         }
     }
 } // namespace common
-
-#endif // CROCUS_CLIENT_COMMON_H
