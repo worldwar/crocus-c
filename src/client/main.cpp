@@ -10,7 +10,7 @@ int main() {
 
     sf::Texture texture;
 
-    domain::load();
+    Sprites::load();
 
     ClientGame game;
     while (window.isOpen()) {

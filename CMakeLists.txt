@@ -13,6 +13,7 @@ set(CMAKE_CXX_STANDARD 14)
 #SET(GCC_COVERAGE_LINK_FLAGS    "-lgcov")
 
 FILE( GLOB_RECURSE PROJECT_SOURCES src/rule/*.cpp src/*.cpp)
+FILE( GLOB_RECURSE PROJECT_CLIENT_SOURCES src/client/*.cpp)
 FILE( GLOB_RECURSE PROJECT_TEST_SOURCES test/*.cpp)
 FILE( GLOB_RECURSE PROJECT_HEADERS include/*.h )
 
@@ -36,7 +37,7 @@ set_target_properties(lib${PROJECT_NAME} PROPERTIES PREFIX "")
 add_executable(${PROJECT_NAME} src/main/main.cpp )
 target_link_libraries(${PROJECT_NAME} lib${PROJECT_NAME})
 
-add_executable(${SFML_CLIENT_NAME} src/client/main.cpp src/client/client_game.cpp)
+add_executable(${SFML_CLIENT_NAME} ${PROJECT_CLIENT_SOURCES})
 if(SFML_FOUND)
     include_directories(${SFML_INCLUDE_DIR})
     target_link_libraries(${SFML_CLIENT_NAME} lib${PROJECT_NAME} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})

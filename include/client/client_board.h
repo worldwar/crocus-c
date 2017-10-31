@@ -2,8 +2,8 @@
 #define CROCUS_CLIENT_BOARD_H
 
 #include "client/client_common.h"
-#include "client_domain.h"
 #include "point.h"
+#include "sprites.h"
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -42,7 +42,7 @@ public:
     }
 
     void draw() {
-        _texture.draw(*domain::defaultBoard);
+        _texture.draw(*Sprites::defaultBoard);
         for (auto piece : _board.all()) {
             draw(piece);
         }
@@ -54,8 +54,7 @@ public:
     }
 
     void draw(const Piece *piece, const Point &point) {
-        sf::Sprite *s = domain::redPawn;
-
+        sf::Sprite *s = Sprites::sprite(piece);
         s->setPosition(point.x(), point.y());
         _texture.draw(*s);
         if (piece == _selectedPiece) {
