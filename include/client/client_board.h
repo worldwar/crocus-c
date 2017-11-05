@@ -1,7 +1,9 @@
 #ifndef CROCUS_CLIENT_BOARD_H
 #define CROCUS_CLIENT_BOARD_H
 
+#include "client/animation.h"
 #include "client/client_common.h"
+#include "client/selection_state.h"
 #include "point.h"
 #include "sprites.h"
 #include <SFML/Graphics/RectangleShape.hpp>
@@ -12,7 +14,6 @@
 #include <enums.h>
 #include <piece.h>
 #include <position.h>
-
 class ClientBoard {
 private:
     float _leftPadding;
@@ -23,6 +24,7 @@ private:
     Force _viewForce;
     Piece *_selectedPiece;
     float scalar = 0.6;
+    std::list<Animation *> _animations;
 
 public:
     ClientBoard(Board &board, const Point &topLeft, float grid, Force viewForce)
@@ -32,21 +34,8 @@ public:
         _texture.create(896, 1024);
         _texture.setSmooth(true);
     }
-
-    void draw(sf::RenderWindow &window) {
-        draw();
-        sf::Sprite sprite(_texture.getTexture());
-        sprite.setScale(scalar, scalar);
-        window.draw(sprite);
-        _texture.display();
-    }
-
-    void draw() {
-        _texture.draw(*Sprites::defaultBoard);
-        for (auto piece : _board.all()) {
-            draw(piece);
-        }
-    }
+    void draw(sf::RenderWindow &window, SelectionState *selectionState);
+    void draw(SelectionState *selectionState);
 
     void draw(const Piece *piece) {
         const Point &point = transform(piece->position(), _viewForce);
@@ -101,19 +90,35 @@ public:
         _selectedPiece = nullptr;
     }
 
-    bool moveTo(const Point &point) const {
+    void moveTo(const Point &point) const {
         const Position &position = transform(point);
 
         const Action &action = _board.makeAction(_selectedPiece, position);
-        if (_board.legal(action)) {
+        if (legal(point)) {
+
             _board.apply(action);
-            return true;
         }
-        return false;
+    }
+
+    bool legal(const Point &point) const {
+        const Position &position = transform(point);
+
+        const Action &action = _board.makeAction(_selectedPiece, position);
+        return _board.legal(action);
     }
 
     const Piece *selectedPiece() const {
         return _selectedPiece;
+    }
+
+    void add(Animation *animation) {
+        _animations.push_back(animation);
+    }
+
+    void clearAnimations();
+
+    Board &board() {
+        return _board;
     }
 };
 

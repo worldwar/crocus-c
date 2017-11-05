@@ -13,6 +13,10 @@ int main() {
     Sprites::load();
 
     ClientGame game;
+
+    TimePoint _start = Clock::now();
+    TimePoint _frameStart = _start;
+
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -22,9 +26,16 @@ int main() {
                 game.handle(event);
             }
         }
-        window.clear();
-        game.draw(window);
-        window.display();
+        auto now = Clock::now();
+
+        auto duration = now - _frameStart;
+        const auto interval = Duration(1000000 / 120);
+        if (duration > interval) {
+            window.clear();
+            game.draw(window);
+            window.display();
+            _frameStart = _frameStart + interval;
+        }
     }
     return 0;
 }
