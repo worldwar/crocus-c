@@ -134,11 +134,9 @@ bool KingFaceRule::legal(const Board &board, const Action &action) const {
     Board b = board.tryApply(action);
     Piece piece = action.piece();
     Position kingPosition = b.king(piece.force())->position();
-    Position opposedKingPosition =
-        board.king(opposed(piece.force()))->position();
+    Position opposedKingPosition = b.king(opposed(piece.force()))->position();
     if (Positions::xd(kingPosition, opposedKingPosition) == 0) {
-        return !board.empty(
-            Positions::range(kingPosition, opposedKingPosition));
+        return !b.empty(Positions::range(kingPosition, opposedKingPosition));
     }
     return true;
 }
