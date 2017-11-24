@@ -13,8 +13,9 @@ void ClientBoard::draw(sf::RenderWindow &window,
 void ClientBoard::draw(SelectionState *selectionState) {
     _texture.draw(*Sprites::defaultBoard);
     for (auto piece : _board.all()) {
-        if (selectionState->type() == 4) {
-            if (piece != selectedPiece()) {
+        if (selectionState == SelectionStates::shotState() ||
+            selectionState == SelectionStates::opposedForceShotState()) {
+            if (piece != selectedPiece() && piece != movingPiece()) {
                 draw(piece);
             }
         } else {

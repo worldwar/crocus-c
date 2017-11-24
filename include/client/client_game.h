@@ -4,8 +4,11 @@
 #include "client/animation.h"
 #include "client/client_board.h"
 #include "client/selection_state.h"
+#include "network/sender.h"
 #include <SFML/Window/Event.hpp>
 #include <game.h>
+#include <iostream>
+#include <mutex>
 
 class GameContext;
 class ClientGame {
@@ -15,9 +18,12 @@ private:
     Force _player;
     SelectionState *selectionState;
     GameContext *context;
+    Sender *sender;
+    std::mutex _mutex;
 
 public:
     ClientGame();
+    void init();
 
     void handle(sf::Event event) {
         if (event.mouseButton.button == sf::Mouse::Left) {
@@ -26,6 +32,8 @@ public:
             selectionState = selectionState->handleClick(context, point);
         }
     }
+
+    void handle(const Packet *packet);
 
     void handleFinish() {
         selectionState = selectionState->finish(context);
@@ -42,6 +50,16 @@ public:
     Force player() const {
         return _player;
     }
+
+    void send(const Action &action);
+
+    void startReceive();
+
+    std::mutex &mutex() {
+        return _mutex;
+    }
+
+    void begin(Force force);
 };
 
 #endif // CROCUS_CLIENT_GAME_H

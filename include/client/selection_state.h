@@ -2,6 +2,7 @@
 #define CROCUS_SELECTION_STATE_H
 
 #include <map>
+#include <network/packet.h>
 
 class GameContext;
 class ClientGame;
@@ -25,7 +26,11 @@ public:
     virtual SelectionState *handleClick(GameContext *context,
                                         const Point &point) {
         return this;
-    };
+    }
+    virtual SelectionState *handlePacket(GameContext *context,
+                                         const Packet *packet) {
+        return this;
+    }
     int type() const {
         return _type;
     }
@@ -36,6 +41,9 @@ public:
     NumbState(int type);
 
     SelectionState *awake(GameContext *context) override;
+
+    SelectionState *handlePacket(GameContext *context,
+                                 const Packet *packet) override;
 };
 
 class AwakeState : public SelectionState {

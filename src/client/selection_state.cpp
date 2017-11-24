@@ -1,10 +1,37 @@
 #include "client/selection_state.h"
 #include "client/client_board.h"
 #include "client/game_context.h"
+#include <network/packets.h>
 NumbState::NumbState(int type) : SelectionState(type) {}
 
 SelectionState *NumbState::awake(GameContext *context) {
     return SelectionStates::awakeState();
+}
+
+SelectionState *NumbState::handlePacket(GameContext *context,
+                                        const Packet *packet) {
+
+    std::lock_guard<std::mutex> lock(context->clientGame()->mutex());
+    const Action &action = Packets::action(packet);
+
+    ClientBoard &clientBoard = context->clientBoard();
+    Board &board = clientBoard.board();
+
+    Force player = context->clientGame()->player();
+    const Point &fromPoint =
+        clientBoard.transform(action.piece().position(), player);
+    const Point &toPoint = clientBoard.transform(action.target(), player);
+
+    Piece *piece = board.piece(action.piece().position());
+    clientBoard.moving(piece);
+    Animation *animation = new Animation{piece, fromPoint, toPoint, 0.02};
+    std::function<void()> handler = [context, &board, action]() {
+        context->clientGame()->handleFinish();
+        board.apply(action);
+    };
+    animation->setFinishHandler(handler);
+    context->clientGame()->add(animation);
+    return SelectionStates::opposedForceShotState();
 }
 
 AwakeState::AwakeState(int type) : SelectionState(type) {}
@@ -49,11 +76,14 @@ SelectionState *LoadState::handleClick(GameContext *context,
         const Action &action =
             coreBoard.makeAction(board.selectedPiece(), position);
         if (board.legal(point)) {
+            board.moving(const_cast<Piece *>(board.selectedPiece()));
             Animation *animation =
                 new Animation{board.selectedPiece(), fromPoint, toPoint, 0.02};
             std::function<void()> handler = [context, &coreBoard, action]() {
                 context->clientGame()->handleFinish();
                 coreBoard.apply(action);
+                context->clientBoard().unselect();
+                context->clientGame()->send(action);
             };
             animation->setFinishHandler(handler);
             context->clientGame()->add(animation);
@@ -66,7 +96,7 @@ SelectionState *LoadState::handleClick(GameContext *context,
 ShotState::ShotState(int type) : SelectionState(type) {}
 
 SelectionState *ShotState::finish(GameContext *context) {
-    return SelectionStates::awakeState();
+    return SelectionStates::numbState();
 }
 
 OpposedForceShotState::OpposedForceShotState(int type) : SelectionState(type) {}

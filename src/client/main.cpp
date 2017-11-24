@@ -14,6 +14,8 @@ int main() {
 
     ClientGame game;
 
+    game.init();
+
     TimePoint _start = Clock::now();
     TimePoint _frameStart = _start;
 

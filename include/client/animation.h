@@ -27,7 +27,7 @@ public:
     bool finished() const {
         return _finished;
     }
-    void setFinishHandler(std::function<void()> finishHandler) {
+    void setFinishHandler(const std::function<void()> &finishHandler) {
         _finishHandler = finishHandler;
     }
 };

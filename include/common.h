@@ -62,5 +62,7 @@ namespace common {
 
     Duration duration(const TimePoint &from, const TimePoint &to);
 
+    int toInt(uint8_t buffer[4]);
+
 } // namespace common
 #endif // CROCUS_COMMON_H

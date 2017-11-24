@@ -7,6 +7,7 @@ private:
     int _y;
 
 public:
+    Position() : Position(0, 0) {}
     Position(int x, int y) : _x(x), _y(y) {}
 
     int x() const {

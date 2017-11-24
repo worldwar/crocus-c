@@ -23,6 +23,7 @@ private:
     sf::RenderTexture _texture;
     Force _viewForce;
     Piece *_selectedPiece;
+    Piece *_movingPiece;
     float scalar = 0.6;
     std::list<Animation *> _animations;
 
@@ -30,7 +31,7 @@ public:
     ClientBoard(Board &board, const Point &topLeft, float grid, Force viewForce)
         : _board(board), _leftPadding(topLeft.x()), _topPadding(topLeft.y()),
           _grid(grid), _viewForce(viewForce), _texture(),
-          _selectedPiece(nullptr) {
+          _selectedPiece(nullptr), _movingPiece(nullptr) {
         _texture.create(896, 1024);
         _texture.setSmooth(true);
     }
@@ -46,7 +47,7 @@ public:
         sf::Sprite *s = Sprites::sprite(piece);
         s->setPosition(point.x(), point.y());
         _texture.draw(*s);
-        if (piece == _selectedPiece) {
+        if (piece == _selectedPiece || piece == _movingPiece) {
             const sf::IntRect &rect = s->getTextureRect();
             sf::RectangleShape rectangle;
             rectangle.setSize({static_cast<float>(rect.width),
@@ -111,6 +112,18 @@ public:
         return _selectedPiece;
     }
 
+    const Piece *movingPiece() const {
+        return _movingPiece;
+    }
+
+    void moving(Piece *piece) {
+        _movingPiece = piece;
+    }
+
+    void stopMoving() {
+        _movingPiece = nullptr;
+    }
+
     void add(Animation *animation) {
         _animations.push_back(animation);
     }
@@ -119,6 +132,10 @@ public:
 
     Board &board() {
         return _board;
+    }
+
+    void setView(Force force) {
+        _viewForce = force;
     }
 };
 
