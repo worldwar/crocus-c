@@ -10,6 +10,8 @@ public:
 
     static Packet *action(uint8_t bytes[]);
 
+    static OrderPacket *order(uint8_t bytes[]);
+
     static Action action(const Packet *packet);
 };
 

@@ -21,7 +21,6 @@ void ClientGame::init() {
     sender = new Sender("localhost", 10200);
     sender->init();
     startReceive();
-    begin(Force::RED);
 }
 
 void ClientGame::send(const Action &action) {
@@ -43,6 +42,14 @@ void ClientGame::startReceive() {
 void ClientGame::handle(const Packet *packet) {
     if (packet->type() == PacketType::ACTION) {
         selectionState = selectionState->handlePacket(context, packet);
+    } else if (packet->type() == PacketType::ORDER) {
+        const OrderPacket *orderPacket =
+            dynamic_cast<const OrderPacket *>(packet);
+        if (orderPacket->orderType() == OrderType::START_GAME) {
+            const StartGamePacket *p =
+                dynamic_cast<const StartGamePacket *>(orderPacket);
+            begin(p->force());
+        }
     }
 }
 

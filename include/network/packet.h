@@ -17,6 +17,8 @@ enum class PacketType {
     MESSAGE = 5
 };
 
+enum class OrderType { START_GAME = 1 };
+
 class Packet {
 protected:
     PacketType _type;
@@ -88,6 +90,34 @@ public:
 
     void setTo(const Position &to) {
         _to = to;
+    }
+};
+
+class OrderPacket : public Packet {
+protected:
+    OrderType _orderType;
+
+public:
+    OrderPacket(OrderType orderType)
+        : Packet(PacketType::ORDER), _orderType(orderType) {}
+
+    OrderType orderType() const {
+        return _orderType;
+    }
+};
+
+class StartGamePacket : public OrderPacket {
+private:
+    Force _force;
+
+public:
+    StartGamePacket(Force force)
+        : OrderPacket(OrderType::START_GAME), _force(force) {}
+
+    RawPacket raw() const override;
+
+    Force force() const {
+        return _force;
     }
 };
 

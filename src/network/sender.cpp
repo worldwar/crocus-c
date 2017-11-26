@@ -24,5 +24,13 @@ Packet *Sender::receive() {
     int length = common::toInt(lengthBytes);
     uint8_t bytes[length];
     _socket.receive(bytes, length, received);
+
+    switch (static_cast<PacketType>(bytes[0])) {
+    case PacketType::ACTION:
+        return Packets::action(bytes);
+    case PacketType::ORDER:
+        return Packets::order(bytes);
+    }
+
     return Packets::action(bytes);
 }

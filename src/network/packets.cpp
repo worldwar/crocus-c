@@ -1,4 +1,5 @@
 #include "network/packets.h"
+#include <common.h>
 
 Packet *Packets::packet(const Action &action) {
     ActionPacket *actionPacket = new ActionPacket{
@@ -22,4 +23,11 @@ Action Packets::action(const Packet *packet) {
     return Action{Piece{actionPacket->force(), actionPacket->kind(),
                         actionPacket->from()},
                   actionPacket->to(), actionPacket->actionType()};
+}
+
+OrderPacket *Packets::order(uint8_t *bytes) {
+    switch (static_cast<OrderType>(bytes[1])) {
+    case OrderType::START_GAME:
+        return new StartGamePacket{static_cast<Force>(bytes[2])};
+    }
 }

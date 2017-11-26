@@ -15,3 +15,12 @@ RawPacket ActionPacket::raw() const {
     raw << (uint8_t)common::cast(_to.y());
     return raw;
 }
+
+RawPacket StartGamePacket::raw() const {
+    RawPacket raw;
+    raw << 3;
+    raw << (uint8_t)common::cast(_type);
+    raw << (uint8_t)common::cast(_orderType);
+    raw << (uint8_t)common::cast(_force);
+    return raw;
+}
