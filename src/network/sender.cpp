@@ -22,15 +22,18 @@ Packet *Sender::receive() {
     size_t received;
     _socket.receive(lengthBytes, 4, received);
     int length = common::toInt(lengthBytes);
-    uint8_t bytes[length];
+    uint8_t *bytes = new uint8_t[length];
     _socket.receive(bytes, length, received);
 
+	Packet *packet = nullptr;
     switch (static_cast<PacketType>(bytes[0])) {
     case PacketType::ACTION:
-        return Packets::action(bytes);
+         packet = Packets::action(bytes);
+		 break;
     case PacketType::ORDER:
-        return Packets::order(bytes);
+         packet = Packets::order(bytes);
+		 break;
     }
-
-    return Packets::action(bytes);
+	delete[] bytes;
+    return packet;
 }

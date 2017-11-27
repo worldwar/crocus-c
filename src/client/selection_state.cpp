@@ -24,7 +24,7 @@ SelectionState *NumbState::handlePacket(GameContext *context,
 
     Piece *piece = board.piece(action.piece().position());
     clientBoard.moving(piece);
-    Animation *animation = new Animation{piece, fromPoint, toPoint, 0.02};
+    Animation *animation = new Animation{piece, fromPoint, toPoint, 0.02f};
     std::function<void()> handler = [context, &board, action]() {
         context->clientGame()->handleFinish();
         board.apply(action);
@@ -78,7 +78,7 @@ SelectionState *LoadState::handleClick(GameContext *context,
         if (board.legal(point)) {
             board.moving(const_cast<Piece *>(board.selectedPiece()));
             Animation *animation =
-                new Animation{board.selectedPiece(), fromPoint, toPoint, 0.02};
+                new Animation{board.selectedPiece(), fromPoint, toPoint, 0.02f};
             std::function<void()> handler = [context, &coreBoard, action]() {
                 context->clientGame()->handleFinish();
                 coreBoard.apply(action);
