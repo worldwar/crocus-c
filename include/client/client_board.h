@@ -26,6 +26,7 @@ private:
     Piece *_movingPiece;
     float scalar = 0.6;
     std::list<Animation *> _animations;
+    std::wstring _text;
 
 public:
     ClientBoard(Board &board, const Point &topLeft, float grid, Force viewForce)
@@ -37,6 +38,7 @@ public:
     }
     void draw(sf::RenderWindow &window, SelectionState *selectionState);
     void draw(SelectionState *selectionState);
+    void drawText();
 
     void draw(const Piece *piece) {
         const Point &point = transform(piece->position(), _viewForce);
@@ -136,6 +138,17 @@ public:
 
     void setView(Force force) {
         _viewForce = force;
+    }
+
+    void reset() {
+        unselect();
+        stopMoving();
+        _animations.clear();
+        _text = L"";
+    }
+
+    void setText(const std::wstring &text) {
+        _text = text;
     }
 };
 

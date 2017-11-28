@@ -24,3 +24,13 @@ RawPacket StartGamePacket::raw() const {
     raw << (uint8_t)common::cast(_force);
     return raw;
 }
+
+RawPacket EndGamePacket::raw() const {
+    RawPacket raw;
+    raw << 4;
+    raw << (uint8_t)common::cast(_type);
+    raw << (uint8_t)common::cast(_orderType);
+    raw << (uint8_t)common::cast(_result);
+    raw << (uint8_t)common::cast(_reason);
+    return raw;
+}

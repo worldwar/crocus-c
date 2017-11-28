@@ -60,6 +60,12 @@ public:
     }
 
     void begin(Force force);
+
+    void end(GameResult result, GameEndReason reason);
+
+    void reset();
+
+    void showText(const std::wstring &text);
 };
 
 #endif // CROCUS_CLIENT_GAME_H

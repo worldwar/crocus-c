@@ -94,6 +94,8 @@ public:
     bool legal(const Action &action) const;
 
     std::string print() const;
+
+    void clear();
 };
 
 #endif // CROCUS_BOARD_H

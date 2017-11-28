@@ -164,3 +164,10 @@ std::string Board::print() const {
     }
     return s;
 }
+
+void Board::clear() {
+    std::function<void(Piece * piece)> op = [&](auto piece) {
+        this->makeEmpty(piece->position());
+    };
+    each(all(), op);
+}

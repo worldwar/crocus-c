@@ -9,6 +9,7 @@ private:
     Board _board;
     GameState _state;
     GameResult _result;
+    GameEndReason _reason;
     Force _turn;
     TimePoint _startDate;
     TimePoint _turnStartDate;
@@ -29,11 +30,15 @@ public:
     bool play(const Piece *piece, const Position &position);
 
     void resign(Force force) {
-        win(opposed(force));
+        win(opposed(force), GameEndReason::RESIGN);
     }
 
-    void draw() {
-        endGame(GameResult::DRAW);
+    void draw(Force force) {
+        if (force == Force::RED) {
+            endGame(GameResult::DRAW, GameEndReason::RED_DRAW);
+        } else {
+            endGame(GameResult::DRAW, GameEndReason::BLACK_DRAW);
+        }
     }
 
     TimePoint startDate() const {
@@ -68,6 +73,11 @@ public:
         return _board;
     }
 
+    void reset() {
+        _board.clear();
+        _state = GameState::NOT_STARTED;
+    }
+
 private:
     void next() {
         settle();
@@ -79,20 +89,21 @@ private:
     void settle() {
         bool checkmated = _board.checkmated(opposed(_turn));
         if (checkmated) {
-            win(_turn);
+            win(_turn, GameEndReason::CHECKMATE);
         }
     }
 
-    void endGame(GameResult result) {
+    void endGame(GameResult result, GameEndReason reason) {
         _result = result;
         _state = GameState::ENDED;
+        _reason = reason;
     }
 
-    void win(Force force) {
+    void win(Force force, GameEndReason reason) {
         if (force == Force::RED) {
-            endGame(GameResult::RED_WIN);
+            endGame(GameResult::RED_WIN, reason);
         } else {
-            endGame(GameResult::BLACK_WIN);
+            endGame(GameResult::BLACK_WIN, reason);
         }
     }
 

@@ -17,7 +17,7 @@ enum class PacketType {
     MESSAGE = 5
 };
 
-enum class OrderType { START_GAME = 1 };
+enum class OrderType { START_GAME = 1, END_GAME = 2 };
 
 class Packet {
 protected:
@@ -118,6 +118,26 @@ public:
 
     Force force() const {
         return _force;
+    }
+};
+
+class EndGamePacket : public OrderPacket {
+private:
+    GameResult _result;
+    GameEndReason _reason;
+
+public:
+    EndGamePacket(GameResult result, GameEndReason reason)
+        : OrderPacket(OrderType::END_GAME), _result(result), _reason(reason) {}
+
+    RawPacket raw() const override;
+
+    GameResult result() const {
+        return _result;
+    }
+
+    GameEndReason reason() const {
+        return _reason;
     }
 };
 

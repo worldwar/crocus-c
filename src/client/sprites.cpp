@@ -1,10 +1,10 @@
 #include "client/sprites.h"
-#include <SFML/Graphics/Texture.hpp>
 #include <common.h>
 
 sf::Sprite *Sprites::redPawn = nullptr;
 sf::Sprite *Sprites::defaultBoard = nullptr;
 sf::Texture *Sprites::pieces = nullptr;
+sf::Font Sprites::font;
 int Sprites::pieceSize = 300;
 float Sprites::pieceScale = 0.26;
 std::map<int, sf::Sprite *> Sprites::pieceMap;
@@ -49,4 +49,6 @@ void Sprites::load() {
     pieces = new sf::Texture;
     pieces->loadFromFile("resources/images/pieces.png");
     pieces->setSmooth(true);
+
+    font.loadFromFile("resources/fonts/simhei.ttf");
 }

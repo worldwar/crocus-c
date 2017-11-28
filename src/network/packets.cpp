@@ -29,5 +29,8 @@ OrderPacket *Packets::order(uint8_t *bytes) {
     switch (static_cast<OrderType>(bytes[1])) {
     case OrderType::START_GAME:
         return new StartGamePacket{static_cast<Force>(bytes[2])};
+    case OrderType::END_GAME:
+        return new EndGamePacket{static_cast<GameResult>(bytes[2]),
+                                 static_cast<GameEndReason>(bytes[3])};
     }
 }

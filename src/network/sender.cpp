@@ -25,15 +25,15 @@ Packet *Sender::receive() {
     uint8_t *bytes = new uint8_t[length];
     _socket.receive(bytes, length, received);
 
-	Packet *packet = nullptr;
+    Packet *packet = nullptr;
     switch (static_cast<PacketType>(bytes[0])) {
     case PacketType::ACTION:
-         packet = Packets::action(bytes);
-		 break;
+        packet = Packets::action(bytes);
+        break;
     case PacketType::ORDER:
-         packet = Packets::order(bytes);
-		 break;
+        packet = Packets::order(bytes);
+        break;
     }
-	delete[] bytes;
+    delete[] bytes;
     return packet;
 }

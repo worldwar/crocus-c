@@ -49,6 +49,10 @@ void ClientGame::handle(const Packet *packet) {
             const StartGamePacket *p =
                 dynamic_cast<const StartGamePacket *>(orderPacket);
             begin(p->force());
+        } else if (orderPacket->orderType() == OrderType::END_GAME) {
+            const EndGamePacket *p =
+                dynamic_cast<const EndGamePacket *>(orderPacket);
+            end(p->result(), p->reason());
         }
     }
 }
@@ -62,4 +66,28 @@ void ClientGame::begin(Force force) {
     } else {
         selectionState = SelectionStates::numbState();
     }
+}
+
+void ClientGame::end(GameResult result, GameEndReason reason) {
+    using namespace std::chrono_literals;
+    if ((result == GameResult::RED_WIN && player() == Force::RED) ||
+        (result == GameResult::BLACK_WIN && player() == Force::BLACK)) {
+        showText(L"大吉大利，晚上吃鸡");
+    } else if (result == GameResult::DRAW) {
+        showText(L"平局");
+    } else {
+        showText(L"您输了，再接再厉");
+    }
+    std::this_thread::sleep_for(5s);
+    reset();
+}
+
+void ClientGame::reset() {
+    game.reset();
+    clientBoard.reset();
+    selectionState = SelectionStates::state(1);
+}
+
+void ClientGame::showText(const std::wstring &text) {
+    clientBoard.setText(text);
 }
