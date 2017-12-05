@@ -1,12 +1,11 @@
 #include "client/sprites.h"
 #include <common.h>
 
-sf::Sprite *Sprites::redPawn = nullptr;
 sf::Sprite *Sprites::defaultBoard = nullptr;
 sf::Texture *Sprites::pieces = nullptr;
 sf::Font Sprites::font;
 int Sprites::pieceSize = 300;
-float Sprites::pieceScale = 0.26;
+float Sprites::pieceScale = 0.357;
 std::map<int, sf::Sprite *> Sprites::pieceMap;
 
 sf::Sprite *Sprites::createPieceSprite(const Piece *piece) {
@@ -34,13 +33,6 @@ sf::Sprite *Sprites::sprite(const Piece *piece) {
 }
 
 void Sprites::load() {
-    sf::Texture *texture = new sf::Texture;
-    texture->loadFromFile("resources/images/black-bishop.png");
-    texture->setSmooth(true);
-    redPawn = new sf::Sprite(*texture);
-    redPawn->setOrigin(130, 130);
-    redPawn->setScale(0.3, 0.3);
-
     sf::Texture *texture2 = new sf::Texture;
     texture2->loadFromFile("resources/images/board.jpg");
     texture2->setSmooth(true);

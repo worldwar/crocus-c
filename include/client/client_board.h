@@ -24,7 +24,7 @@ private:
     Force _viewForce;
     Piece *_selectedPiece;
     Piece *_movingPiece;
-    float scalar = 0.6;
+    float scalar = 0.437f;
     std::list<Animation *> _animations;
     std::wstring _text;
 
@@ -33,7 +33,7 @@ public:
         : _board(board), _leftPadding(topLeft.x()), _topPadding(topLeft.y()),
           _grid(grid), _viewForce(viewForce), _texture(),
           _selectedPiece(nullptr), _movingPiece(nullptr) {
-        _texture.create(896, 1024);
+        _texture.create(1360, 1500);
         _texture.setSmooth(true);
     }
     void draw(sf::RenderWindow &window, SelectionState *selectionState);
@@ -58,7 +58,7 @@ public:
             rectangle.setOutlineColor(sf::Color::Red);
             rectangle.setFillColor(sf::Color::Transparent);
             rectangle.setOutlineThickness(5);
-            rectangle.setScale(0.3, 0.3);
+            rectangle.setScale(0.4, 0.4);
             rectangle.setPosition(point.x(), point.y());
             _texture.draw(rectangle);
         }
@@ -76,8 +76,8 @@ public:
     }
 
     Position transform(const Point &point) const {
-        int x = 9 - (point.x() - topLeft().x()) / scalar / _grid;
-        int y = 10 - (point.y() - topLeft().y()) / scalar / _grid;
+        int x = 9 - (int)((point.x() / scalar - topLeft().x() + _grid / 2.0) / _grid);
+        int y = 10 - (int)((point.y() / scalar - topLeft().y() + _grid / 2.0) / _grid);
         return common::view({x, y}, _viewForce);
     }
 

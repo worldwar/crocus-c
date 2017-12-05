@@ -8,7 +8,6 @@
 
 class Sprites {
 public:
-    static sf::Sprite *redPawn;
     static sf::Sprite *defaultBoard;
     static sf::Texture *pieces;
     static int pieceSize;

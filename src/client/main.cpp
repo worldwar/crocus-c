@@ -6,7 +6,7 @@
 #include <client/client_game.h>
 
 int main() {
-    sf::RenderWindow window(sf::VideoMode(550, 640), "crocus");
+    sf::RenderWindow window(sf::VideoMode(580, 640), "crocus");
 
     sf::Texture texture;
 

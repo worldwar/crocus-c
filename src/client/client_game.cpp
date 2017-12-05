@@ -3,7 +3,7 @@
 #include <thread>
 
 ClientGame::ClientGame()
-    : game(), clientBoard{game.board(), {42, 52}, 102, Force::BLACK} {
+    : game(), clientBoard{game.board(), {113, 113}, 140, Force::BLACK} {
     _player = Force::BLACK;
     selectionState = SelectionStates::state(1);
     context = new GameContext(this, clientBoard);
