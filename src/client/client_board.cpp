@@ -2,11 +2,12 @@
 #include <SFML/Graphics/Text.hpp>
 #include <client/client_game.h>
 
-void ClientBoard::draw(sf::RenderWindow &window,
+void ClientBoard::draw(sf::RenderWindow &window, const Point &point,
                        SelectionState *selectionState) {
     draw(selectionState);
     sf::Sprite sprite(_texture.getTexture());
     sprite.setScale(scalar, scalar);
+    sprite.setPosition({point.x(), point.y()});
     window.draw(sprite);
     _texture.display();
 }

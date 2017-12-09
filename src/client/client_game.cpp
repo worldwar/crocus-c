@@ -3,14 +3,16 @@
 #include <thread>
 
 ClientGame::ClientGame()
-    : game(), clientBoard{game.board(), {113, 113}, 140, Force::BLACK} {
+    : game(), clientBoard{game.board(), {113, 113}, 140, Force::BLACK},
+      boardPosition{200, 0}, _controlBoard(this) {
     _player = Force::BLACK;
     selectionState = SelectionStates::state(1);
     context = new GameContext(this, clientBoard);
 }
 
 void ClientGame::draw(sf::RenderWindow &window) {
-    clientBoard.draw(window, selectionState);
+    clientBoard.draw(window, boardPosition, selectionState);
+    _controlBoard.draw(window);
 }
 
 void ClientGame::printState() {
@@ -18,7 +20,7 @@ void ClientGame::printState() {
 }
 
 void ClientGame::init() {
-    sender = new Sender("game.zhuran.tw", 10200);
+    sender = new Sender("localhost", 10200);
     sender->init();
     startReceive();
 }
@@ -58,14 +60,14 @@ void ClientGame::handle(const Packet *packet) {
 }
 
 void ClientGame::begin(Force force) {
-    game.board().reset();
-    clientBoard.setView(force);
     _player = force;
+    clientBoard.setView(force);
     if (force == Force::RED) {
         selectionState = SelectionStates::awakeState();
     } else {
         selectionState = SelectionStates::numbState();
     }
+    game.start();
 }
 
 void ClientGame::end(GameResult result, GameEndReason reason) {
@@ -85,9 +87,22 @@ void ClientGame::end(GameResult result, GameEndReason reason) {
 void ClientGame::reset() {
     game.reset();
     clientBoard.reset();
+    _controlBoard.reset();
     selectionState = SelectionStates::state(1);
 }
 
 void ClientGame::showText(const std::wstring &text) {
     clientBoard.setText(text);
+}
+
+void ClientGame::ready() {
+    ReadyPacket *packet = Packets::ready();
+    sender->send(packet);
+    delete packet;
+}
+
+void ClientGame::unready() {
+    UnreadyPacket *packet = Packets::unready();
+    sender->send(packet);
+    delete packet;
 }

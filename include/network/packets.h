@@ -13,6 +13,10 @@ public:
     static OrderPacket *order(uint8_t bytes[]);
 
     static Action action(const Packet *packet);
+
+    static ReadyPacket *ready();
+
+    static UnreadyPacket *unready();
 };
 
 #endif // CROCUS_PACKETS_H

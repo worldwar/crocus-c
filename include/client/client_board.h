@@ -36,7 +36,8 @@ public:
         _texture.create(1360, 1500);
         _texture.setSmooth(true);
     }
-    void draw(sf::RenderWindow &window, SelectionState *selectionState);
+    void draw(sf::RenderWindow &window, const Point &point,
+              SelectionState *selectionState);
     void draw(SelectionState *selectionState);
     void drawText();
 
@@ -76,8 +77,10 @@ public:
     }
 
     Position transform(const Point &point) const {
-        int x = 9 - (int)((point.x() / scalar - topLeft().x() + _grid / 2.0) / _grid);
-        int y = 10 - (int)((point.y() / scalar - topLeft().y() + _grid / 2.0) / _grid);
+        int x = 9 - (int)((point.x() / scalar - topLeft().x() + _grid / 2.0) /
+                          _grid);
+        int y = 10 - (int)((point.y() / scalar - topLeft().y() + _grid / 2.0) /
+                           _grid);
         return common::view({x, y}, _viewForce);
     }
 

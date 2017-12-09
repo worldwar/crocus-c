@@ -29,6 +29,7 @@ set(myproject_VERSION_MINOR 0)
 add_definitions(${GCC_COVERAGE_COMPILE_FLAGS})
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 find_package(SFML 2 REQUIRED network audio graphics window system)
+find_package(OpenGL)
 
 
 add_library(lib${PROJECT_NAME} ${PROJECT_HEADERS} ${PROJECT_SOURCES})
@@ -40,7 +41,7 @@ target_link_libraries(${PROJECT_NAME} lib${PROJECT_NAME})
 add_executable(${SFML_CLIENT_NAME} ${PROJECT_CLIENT_SOURCES})
 if(SFML_FOUND)
     include_directories(${SFML_INCLUDE_DIR})
-    target_link_libraries(${SFML_CLIENT_NAME} lib${PROJECT_NAME} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
+    target_link_libraries(${SFML_CLIENT_NAME} lib${PROJECT_NAME} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES} ${OPENGL_gl_LIBRARY})
 endif()
 
 

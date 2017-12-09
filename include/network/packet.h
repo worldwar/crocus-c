@@ -17,7 +17,7 @@ enum class PacketType {
     MESSAGE = 5
 };
 
-enum class OrderType { START_GAME = 1, END_GAME = 2 };
+enum class OrderType { START_GAME = 1, END_GAME = 2, READY = 3, UNREADY = 4 };
 
 class Packet {
 protected:
@@ -141,4 +141,17 @@ public:
     }
 };
 
+class ReadyPacket : public OrderPacket {
+public:
+    ReadyPacket() : OrderPacket(OrderType::READY) {}
+
+    RawPacket raw() const override;
+};
+
+class UnreadyPacket : public OrderPacket {
+public:
+    UnreadyPacket() : OrderPacket(OrderType::UNREADY) {}
+
+    RawPacket raw() const override;
+};
 #endif // CROCUS_PACKET_H

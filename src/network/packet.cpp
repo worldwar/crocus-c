@@ -34,3 +34,19 @@ RawPacket EndGamePacket::raw() const {
     raw << (uint8_t)common::cast(_reason);
     return raw;
 }
+
+RawPacket UnreadyPacket::raw() const {
+    RawPacket raw;
+    raw << 2;
+    raw << (uint8_t)common::cast(_type);
+    raw << (uint8_t)common::cast(_orderType);
+    return raw;
+}
+
+RawPacket ReadyPacket::raw() const {
+    RawPacket raw;
+    raw << 2;
+    raw << (uint8_t)common::cast(_type);
+    raw << (uint8_t)common::cast(_orderType);
+    return raw;
+}

@@ -32,5 +32,17 @@ OrderPacket *Packets::order(uint8_t *bytes) {
     case OrderType::END_GAME:
         return new EndGamePacket{static_cast<GameResult>(bytes[2]),
                                  static_cast<GameEndReason>(bytes[3])};
+    case OrderType::READY:
+        return Packets::ready();
+    case OrderType::UNREADY:
+        return Packets::unready();
     }
+}
+
+ReadyPacket *Packets::ready() {
+    return new ReadyPacket();
+}
+
+UnreadyPacket *Packets::unready() {
+    return new UnreadyPacket();
 }

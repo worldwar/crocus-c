@@ -78,6 +78,10 @@ public:
         _state = GameState::NOT_STARTED;
     }
 
+    const GameState state() const {
+        return _state;
+    }
+
 private:
     void next() {
         settle();
