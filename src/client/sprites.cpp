@@ -5,7 +5,7 @@ sf::Sprite *Sprites::defaultBoard = nullptr;
 sf::Texture *Sprites::pieces = nullptr;
 sf::Font Sprites::font;
 int Sprites::pieceSize = 300;
-float Sprites::pieceScale = 0.357;
+float Sprites::pieceScale = 0.42;
 std::map<int, sf::Sprite *> Sprites::pieceMap;
 
 sf::Sprite *Sprites::createPieceSprite(const Piece *piece) {

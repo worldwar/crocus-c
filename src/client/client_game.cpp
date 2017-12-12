@@ -20,7 +20,7 @@ void ClientGame::printState() {
 }
 
 void ClientGame::init() {
-    sender = new Sender("localhost", 10200);
+    sender = new Sender("game.zhuran.tw", 10200);
     sender->init();
     startReceive();
 }
